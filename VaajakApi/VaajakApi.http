@@ -1,0 +1,6 @@
+@VaajakApi_HostAddress = http://localhost:5171
+
+GET {{VaajakApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

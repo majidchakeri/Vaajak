@@ -1,6 +1,6 @@
 ﻿namespace Vaajak.Domain.Entities;
 
-internal class Translate
+public class Translate
 {
     public Guid Id { get; set; }
     public string Vocabtran { get; set; } = string.Empty;

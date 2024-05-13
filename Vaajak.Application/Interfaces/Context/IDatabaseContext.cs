@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Vaajak.Domain.Entities;
 
 namespace Vaajak.Application.Interfaces.Context
@@ -14,5 +9,10 @@ namespace Vaajak.Application.Interfaces.Context
         DbSet<Package> Packages { get; set; }
         DbSet<Example> Examples { get; set; }
         DbSet<Translate> Translates { get; set; }
+
+        int SaveChanges();
+        int SaveChanges(bool acceptAllChangesOnSuccess);
+        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

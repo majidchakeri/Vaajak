@@ -1,6 +1,6 @@
 ﻿namespace Vaajak.Domain.Entities;
 
-internal class Vocab
+public class Vocab
 {
     public Guid Id { get; set; }
     public string Vocabulary { get; set; } = string.Empty;
