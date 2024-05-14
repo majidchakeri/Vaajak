@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Vaajak.Infrastructure\Vaajak.Infrastructure.csproj" />
     <ProjectReference Include="..\Vaajak.Persistence\Vaajak.Persistence.csproj" />
   </ItemGroup>
 

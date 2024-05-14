@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Vaajak.Infrastructure.IdentityConfig;
 using Vaajak.Persistence.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("SqlServer");
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
 
+builder.Services.AddIdentityService(builder.Configuration);
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -45,6 +47,7 @@ app.MapGet("/weatherforecast", () =>
 .WithOpenApi();
 
 app.MapControllers();
+app.UseAuthorization();
 
 app.Run();
 

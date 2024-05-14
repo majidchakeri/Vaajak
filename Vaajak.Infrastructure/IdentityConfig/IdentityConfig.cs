@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Vaajak.Domain.Entities;
+using Vaajak.Persistence.Contexts;
 
 namespace Vaajak.Infrastructure.IdentityConfig
 {
@@ -15,12 +15,20 @@ namespace Vaajak.Infrastructure.IdentityConfig
 
             var connectionString = configuration.GetConnectionString("SqlServer");
 
+            
             services.AddDbContext<IdentityDatabaseContext>(options =>options.UseSqlServer(connectionString));
 
-            services.AddIdentityCore<User, Role>()
-               .AddEntityFrameworkStores<IdentityDatabaseContext>()
-               .AddDefaultTokenProviders();
-            //services.AddIdentity
+            var builder = services.AddIdentityCore<User>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredUniqueChars = 0;
+            }).AddRoles<Role>().AddErrorDescriber<PersianIdentityErrorDescriber>();
+
             return services;
 
         }
