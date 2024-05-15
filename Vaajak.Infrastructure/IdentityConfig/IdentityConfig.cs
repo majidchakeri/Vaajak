@@ -27,7 +27,9 @@ namespace Vaajak.Infrastructure.IdentityConfig
                 options.Password.RequiredLength = 5;
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredUniqueChars = 0;
-            }).AddRoles<Role>().AddErrorDescriber<PersianIdentityErrorDescriber>();
+            })
+                .AddEntityFrameworkStores<IdentityDatabaseContext>()
+                .AddErrorDescriber<PersianIdentityErrorDescriber>();
 
             return services;
 

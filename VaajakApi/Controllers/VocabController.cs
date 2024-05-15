@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vaajak.Persistence.Contexts;
+using VaajakApi.Mappers;
 
 namespace VaajakApi.Controllers
 {
@@ -17,13 +18,13 @@ namespace VaajakApi.Controllers
 
         [HttpGet]
         public IActionResult GetAll() {
-            var vocabs = _context.Vocabs.ToListAsync();
+            var vocabs = _context.Vocabs.ToList().Select(s => s.ToVocabsDto());
 
             return Ok(vocabs);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromQuery] int id) {
+        public IActionResult GetById([FromRoute] string id) {
             var vocab = _context.Vocabs.Find(id);
 
             if (vocab == null)
@@ -31,9 +32,13 @@ namespace VaajakApi.Controllers
                 return NotFound();
             }
 
-            return Ok(vocab);
+            return Ok(vocab.ToVocabsDto());
         }
 
-        //[HttpPost]
+        [HttpPost]
+        public IActionResult Create([FromBody] CreateVocabRequest VocabsDto)
+        {
+
+        }
     }
 }
