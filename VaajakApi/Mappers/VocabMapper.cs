@@ -17,13 +17,14 @@ namespace VaajakApi.Mappers
             };
         }
 
-        public static CreateVocabDto ToCreateVocabsDto(this Vocab VocabsDto)
+        public static CreateVocabDto ToCreateVocabsDto(this CreateVocabDto createVocabDto)
         {
             return new CreateVocabDto
             {
-                Vocabulary = VocabsDto.Vocabulary,
-                Type = VocabsDto.Type,
-                Voice = VocabsDto.Voice,
+                Vocabulary = createVocabDto.Vocabulary,
+                Type = createVocabDto.Type,
+                Voice = createVocabDto.Voice,
+                Translations = createVocabDto.Translations.Select(t => new Translate { Vocabtran = t }).ToList(),
             };
         }
     }

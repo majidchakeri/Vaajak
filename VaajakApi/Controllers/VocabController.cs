@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Vaajak.Application.Dto.Vocab;
 using Vaajak.Persistence.Contexts;
 using VaajakApi.Mappers;
 
@@ -36,8 +37,9 @@ namespace VaajakApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateVocabRequest VocabsDto)
+        public async Task<IActionResult> CreateVocab([FromBody] CreateVocabDto createVocabDto)
         {
+            var vocab = createVocabDto.ToVocabEntity();
 
         }
     }
