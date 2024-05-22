@@ -6,8 +6,8 @@ using VaajakApi.Mappers;
 
 namespace VaajakApi.Controllers
 {
-    [Route("api/vocab")]
     [ApiController]
+    [Route("api/vocab")]
     public class VocabController : ControllerBase
     {
         private readonly DatabaseContext _context;
