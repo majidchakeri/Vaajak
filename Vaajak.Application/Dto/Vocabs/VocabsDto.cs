@@ -1,4 +1,4 @@
-﻿namespace Vaajak.Application.Dto.Vocab
+﻿namespace Vaajak.Application.Dto.Vocabs
 {
     public class VocabsDto
     {

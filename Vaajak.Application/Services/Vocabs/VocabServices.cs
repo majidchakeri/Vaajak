@@ -1,6 +1,7 @@
-﻿using Vaajak.Application.Dto.Vocab;
+﻿
+using Vaajak.Application.Dto.Vocabs;
 
-namespace Vaajak.Application.Services.Vocab
+namespace Vaajak.Application.Services.Vocabs
 {
     public class VocabServices(CreateVocabDto createVocab)
     {

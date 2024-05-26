@@ -9,8 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration.GetConnectionString("SqlServer");
-builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
+//var connectionString = builder.Configuration.GetConnectionString("SqlServer");
+//builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddIdentityService(builder.Configuration);
 builder.Services.AddControllers();

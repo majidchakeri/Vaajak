@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Vaajak.Application.Dto.Vocab;
+using Vaajak.Application.Dto.Vocabs;
 using Vaajak.Persistence.Contexts;
 using VaajakApi.Mappers;
 

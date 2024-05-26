@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Vaajak.Domain.Entities;
-using Vaajak.Domain.Repositories.Vocab;
+using Vaajak.Domain.Repositories.Vocabs;
 using Vaajak.Persistence.Contexts;
 
-namespace Vaajak.Infrastructure.Repositories.Vocab
+namespace Vaajak.Infrastructure.Repositories.Vocabs
 {
     public class VocabRepository(DatabaseContext dbContext) : IVocabsRepository
     {
