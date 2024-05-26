@@ -3,11 +3,11 @@ using Vaajak.Domain.Repositories.Vocabs;
 
 namespace Vaajak.Application.Services.Vocabs
 {
-    public class VocabService(IVocabsRepository vocabsRepository)
+    internal class VocabService(IVocabsRepository vocabsRepository) : IVocabService
     {
         public async Task<IEnumerable<Vocab>> GetAllVocabs()
         {
-             var vocabs = await vocabsRepository.GetAllAsync();
+            var vocabs = await vocabsRepository.GetAllAsync();
             return vocabs;
         }
     }

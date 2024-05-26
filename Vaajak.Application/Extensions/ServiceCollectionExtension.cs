@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Vaajak.Application.Services.Vocabs;
 
 namespace Vaajak.Application.Extensions
 {
@@ -6,7 +7,7 @@ namespace Vaajak.Application.Extensions
     {
         public static void AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IVocab>
+            services.AddScoped<IVocabService, VocabService>();
         }
     }
 }

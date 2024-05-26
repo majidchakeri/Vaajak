@@ -1,5 +1,5 @@
 ﻿using Humanizer.Inflections;
-using Vaajak.Application.Dto.Vocab;
+using Vaajak.Application.Dto.Vocabs;
 using Vaajak.Domain.Entities;
 
 namespace VaajakApi.Mappers
@@ -24,7 +24,7 @@ namespace VaajakApi.Mappers
                 Vocabulary = createVocabDto.Vocabulary,
                 Type = createVocabDto.Type,
                 Voice = createVocabDto.Voice,
-                Translations = createVocabDto.Translations.Select(t => new Translate { Vocabtran = t }).ToList(),
+                //Translations = createVocabDto.Translations.Select(t => new Translate { Vocabtran = t }).ToList(),
             };
         }
     }
