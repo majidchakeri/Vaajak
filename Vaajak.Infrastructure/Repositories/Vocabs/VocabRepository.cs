@@ -12,5 +12,11 @@ namespace Vaajak.Infrastructure.Repositories.Vocabs
             var vocabs = await dbContext.Vocabs.ToListAsync();
             return vocabs;
         }
+
+        public async Task<Vocab?> GetByIdAsync(Guid id)
+        {
+            var vocab = await dbContext.Vocabs.FirstOrDefaultAsync(x => x.Id == id);
+            return vocab;
+        }
     }
 }

@@ -10,5 +10,11 @@ namespace Vaajak.Application.Services.Vocabs
             var vocabs = await vocabsRepository.GetAllAsync();
             return vocabs;
         }
+
+        public async Task<Vocab?> GetById(Guid id)
+        {
+            var vocab = await vocabsRepository.GetByIdAsync(id);
+            return vocab;
+        }
     }
 }

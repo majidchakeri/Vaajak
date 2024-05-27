@@ -34,17 +34,18 @@ namespace VaajakApi.Controllers
             return Ok(vocabs);
         }
 
-        //[HttpGet("{id}")]
-        //public async IActionResult GetById([FromRoute] string id) {
-        //    var vocab = await vocabService.Find(id);
+        [HttpGet("ById")]
+        public async Task<IActionResult> GetById([FromQuery] Guid id)
+        {
+            var vocab = await _vocabService.GetById(id);
 
-        //    if (vocab == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (vocab == null)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(vocab.ToVocabsDto());
-        //}
+            return Ok(vocab);
+        }
 
         //[HttpPost]
         //public async Task<IActionResult> CreateVocab([FromBody] CreateVocabDto createVocabDto)
