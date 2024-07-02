@@ -1,10 +1,12 @@
-﻿using Vaajak.Domain.Entities;
+﻿using Vaajak.Application.Dto.Vocabs;
+using Vaajak.Domain.Entities;
 
 namespace Vaajak.Application.Services.Vocabs
 {
     public interface IVocabService
     {
-        Task<IEnumerable<Vocab>> GetAllVocabs();
-        Task<Vocab?> GetById(Guid id);
+        Task<IEnumerable<VocabsDto>> GetAllVocabs();
+        Task<VocabsDto?> GetById(Guid id);
+        Task
     }
 }

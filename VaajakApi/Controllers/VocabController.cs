@@ -47,11 +47,11 @@ namespace VaajakApi.Controllers
             return Ok(vocab);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateVocab([FromBody] CreateVocabDto createVocabDto)
-        //{
-        //    var vocab = createVocabDto.ToVocabEntity();
+        [HttpPost]
+        public async Task<IActionResult> CreateVocab([FromBody] CreateVocabDto createVocabDto)
+        {
+            var vocab = await createVocabDto.ToVocabEntity();
 
-        //}
+        }
     }
 }
