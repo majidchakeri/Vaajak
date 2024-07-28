@@ -7,5 +7,6 @@ namespace Vaajak.Application.Services.Vocabs
     {
         Task<IEnumerable<VocabsDto>> GetAllVocabs();
         Task<VocabsDto?> GetById(Guid id);
+        Task<CreateVocabDto?> CreateVocab(CreateVocabDto createVocabDto);
     }
 }

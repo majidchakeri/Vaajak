@@ -50,7 +50,7 @@ namespace VaajakApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateVocab([FromBody] CreateVocabDto createVocabDto)
         {
-            var vocab = await createVocabDto.ToVocabEntity();
+            var vocab = await _vocabService.CreateVocab(createVocabDto)
 
         }
     }
