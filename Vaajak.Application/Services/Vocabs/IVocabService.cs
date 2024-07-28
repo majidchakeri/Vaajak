@@ -8,6 +8,6 @@ namespace Vaajak.Application.Services.Vocabs
     {
         Task<IEnumerable<VocabsDto>> GetAllVocabs(PaginationRequestDTO pagination);
         Task<VocabsDto?> GetById(Guid id);
-        Task<CreateVocabDto?> CreateVocab(CreateVocabDto createVocabDto);
+        Task<CreateVocabDto> CreateVocab(CreateVocabDto createVocabDto);
     }
 }

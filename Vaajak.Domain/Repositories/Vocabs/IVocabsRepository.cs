@@ -7,6 +7,6 @@ namespace Vaajak.Domain.Repositories.Vocabs
         Task<IEnumerable<Vocab>> GetAllAsync();
         Task<Vocab?> GetByIdAsync(Guid id);
         // Task<Vocab?> CreateVocab(CreateVocabDto createVocabDto);
-        Task<Vocab> CreateVocab();
+        Task<Vocab> CreateVocab(Vocab vocab);
     }
 }
