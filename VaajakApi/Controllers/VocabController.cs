@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Vaajak.Application.Dto.Primitives;
 using Vaajak.Application.Dto.Vocabs;
 using Vaajak.Application.Services.Vocabs;
 using Vaajak.Domain.Repositories.Vocabs;
@@ -27,8 +28,8 @@ namespace VaajakApi.Controllers
         //}
 
         [HttpGet, Route("All")]
-        public async Task<IActionResult> GetAll() {
-            var vocabs = await _vocabService.GetAllVocabs();
+        public async Task<IActionResult> GetAll([FromQuery] PaginationRequestDTO pagination) {
+            var vocabs = await _vocabService.GetAllVocabs(pagination);
                 //Vocabs.ToList().Select(s => s.ToVocabsDto());
 
             return Ok(vocabs);
@@ -50,7 +51,7 @@ namespace VaajakApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateVocab([FromBody] CreateVocabDto createVocabDto)
         {
-            var vocab = await createVocabDto.ToVocabEntity();
+            var vocab = await _vocabService.
 
         }
     }

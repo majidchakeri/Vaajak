@@ -1,17 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Vaajak.Application.Dto.Primitives;
 using Vaajak.Application.Dto.Vocabs;
 using Vaajak.Domain.Entities;
 using Vaajak.Domain.Repositories.Vocabs;
 using Vaajak.Persistence.Contexts;
+using X.PagedList;
 
 namespace Vaajak.Infrastructure.Repositories.Vocabs
 {
-    public class VocabRepository(DatabaseContext dbContext) : IVocabsRepository
+    public class VocabRepository : IVocabsRepository
     {
-        public async Task<IEnumerable<VocabsDto>> GetAllAsync()
+        private readonly DatabaseContext _dbContext;
+        public VocabRepository(DatabaseContext dbContext)
         {
-            var vocabs = await dbContext.Vocabs.ToListAsync();
-            return vocabs;
+            _dbContext = dbContext;
+        }
+
+        public async Task<IEnumerable<VocabsDto>> GetAllAsync(Guid packageId ,PaginationRequestDTO pagination)
+        {
+            var query = _dbContext.Vocabs.Where(vocab => vocab.Package.Any(package => package.Id == packageId)).AsQueryable();
+
+            if (pagination.Paging)
+            {
+                var paginatedVocabs = await query.Select(vocab => new VocabsDto
+                {
+                    Id = vocab.Id,
+                    Vocabulary = vocab.Vocabulary,
+                    Type = vocab.Type,
+                    Voice = vocab.Voice,
+                }).ToPagedListAsync(pagination.Page, pagination.PageSize);
+                    
+            }
         }
 
         public async Task<VocabsDto> GetByIdAsync(Guid id)
