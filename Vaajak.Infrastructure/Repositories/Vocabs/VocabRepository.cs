@@ -17,21 +17,25 @@ namespace Vaajak.Infrastructure.Repositories.Vocabs
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<VocabsDto>> GetAllAsync(Guid packageId ,PaginationRequestDTO pagination)
+        public async Task<IPagedList<VocabsDto>> GetAllAsync(Guid packageId, PaginationRequestDTO pagination)
         {
-            var query = _dbContext.Vocabs.Where(vocab => vocab.Package.Any(package => package.Id == packageId)).AsQueryable();
-
-            if (pagination.Paging)
-            {
-                var paginatedVocabs = await query.Select(vocab => new VocabsDto
+            // Ensure the query is correctly constructed
+            var query = _dbContext.Vocabs
+                .Where(vocab => vocab.Package.Any(package => package.Id == packageId))
+                .OrderByDescending(vocab => vocab.Id)
+                .Select(vocab => new VocabsDto
                 {
                     Id = vocab.Id,
                     Vocabulary = vocab.Vocabulary,
                     Type = vocab.Type,
                     Voice = vocab.Voice,
-                }).ToPagedListAsync(pagination.Page, pagination.PageSize);
-                    
-            }
+                });
+
+            // Apply pagination using ToPagedListAsync
+            var paginatedVocabs = await query
+                .ToPagedListAsync(pagination.Page, pagination.PageSize);
+
+            return paginatedVocabs;
         }
 
         public async Task<VocabsDto> GetByIdAsync(Guid id)

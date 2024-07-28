@@ -1,4 +1,5 @@
-﻿using Vaajak.Application.Dto.Vocabs;
+﻿using Vaajak.Application.Dto.Primitives;
+using Vaajak.Application.Dto.Vocabs;
 using Vaajak.Domain.Entities;
 using Vaajak.Domain.Repositories.Vocabs;
 
@@ -13,9 +14,9 @@ namespace Vaajak.Application.Services.Vocabs
             _vocabsRepository = vocabsRepository;
         }
         
-        public async Task<IEnumerable<VocabsDto>> GetAllVocabs()
+        public async Task<IList<VocabsDto>> GetAllVocabs(PaginationRequestDTO pagination)
         {
-            var vocabs = await _vocabsRepository.GetAllAsync();
+            var vocabs = await _vocabsRepository.GetAllAsync(pagination.PageSize, pagination.Page);
             return vocabs.Select(v => new VocabsDto
             {
                 Id = v.Id,
