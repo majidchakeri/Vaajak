@@ -7,7 +7,7 @@ using X.PagedList.Extensions;
 
 namespace Vaajak.Application.Services.Vocabs
 {
-    internal class VocabService : IVocabService
+    public class VocabService : IVocabService
     {
         private readonly IVocabsRepository _vocabsRepository;
         
@@ -18,7 +18,7 @@ namespace Vaajak.Application.Services.Vocabs
         
         public async Task<IPagedList<VocabsDto>> GetAllAsync(Guid packageId, PaginationRequestDTO pagination)
         {
-            var vocabs = await _vocabsRepository.GetAllAsync();
+            var vocabs = await _vocabsRepository.GetAllAsync(packageId);
             var vocabsDto = vocabs.Select(vocab => new VocabsDto
             {
                 Id = vocab.Id,
@@ -49,7 +49,6 @@ namespace Vaajak.Application.Services.Vocabs
         {
             var vocab = new Vocab
             {
-                Id = Guid.NewGuid(),
                 Vocabulary = createVocabDto.Vocabulary,
                 Type = createVocabDto.Type,
                 Voice = createVocabDto.Voice

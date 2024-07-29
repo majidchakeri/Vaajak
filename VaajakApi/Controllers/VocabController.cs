@@ -28,8 +28,8 @@ namespace VaajakApi.Controllers
         //}
 
         [HttpGet, Route("All")]
-        public async Task<IActionResult> GetAll([FromQuery] PaginationRequestDTO pagination) {
-            var vocabs = await _vocabService.GetAllVocabs(pagination);
+        public async Task<IActionResult> GetAll(Guid packageId, [FromQuery] PaginationRequestDTO pagination) {
+            var vocabs = await _vocabService.GetAllAsync(packageId, pagination);
                 //Vocabs.ToList().Select(s => s.ToVocabsDto());
 
             return Ok(vocabs);

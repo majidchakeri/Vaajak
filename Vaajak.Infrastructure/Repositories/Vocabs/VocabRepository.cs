@@ -18,7 +18,7 @@ namespace Vaajak.Infrastructure.Repositories.Vocabs
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Vocab>> GetAllAsync()
+        public async Task<IEnumerable<Vocab>> GetAllAsync(Guid packageId)
         {
             // Ensure the query is correctly constructed
             return await _dbContext.Vocabs
@@ -56,37 +56,45 @@ namespace Vaajak.Infrastructure.Repositories.Vocabs
             }
         }
 
-        public async Task<Vocab> CreateVocab(CreateVocabDto createVocabDto)
+        public async Task<Vocab> CreateVocab(Vocab vocab)
         {
-            if (createVocabDto == null)
+            if (vocab == null)
             {
-                throw new ArgumentNullException(nameof(createVocabDto), "CreateVocabDto cannot be null");
+                throw new ArgumentNullException(nameof(vocab), "CreateVocabDto cannot be null");
             }
 
             try
             {
-                var vocabEntity = new Vocab
+                if (vocab.Package != null)
                 {
-                    Vocabulary = createVocabDto.Vocabulary,
-                    Type = createVocabDto.Type,
-                    Voice = createVocabDto.Voice,
-                };
+                    foreach (var package in vocab.Package)
+                    {
+                        if (_dbContext.Entry(package).State == EntityState.Detached)
+                        {
+                            _dbContext.Attach(package);
+                        }
+                    }
+                }
 
-                var vocab = await _dbContext.AddAsync(vocabEntity);
+                if (vocab.Translations != null)
+                {
+                    foreach (var translation in vocab.Translations)
+                    {
+                        if (_dbContext.Entry(translation).State == EntityState.Detached)
+                        {
+                            _dbContext.Attach(translation);
+                        }
+                    }
+                }
 
+                // Add the new Vocab entity to the context
+                var result = await _dbContext.Vocabs.AddAsync(vocab);
+
+                // Save changes to the database
                 await _dbContext.SaveChangesAsync();
 
-                var createdVocabDto = new CreateVocabDto
-                {
-                    Vocabulary = createVocabDto.Vocabulary,
-                    Type = createVocabDto.Type,
-                    Voice = createVocabDto.Voice,
-                    PackageId = createVocabDto.PackageId,
-                    Translations = createVocabDto.Translations,
-                };
-
-
-                return createVocabDto;
+                // Return the newly created Vocab entity with its ID populated
+                return result.Entity;
             }
             catch (Exception ex)
             {
