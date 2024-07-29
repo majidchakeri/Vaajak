@@ -6,6 +6,7 @@ using Vaajak.Domain.Entities;
 using Vaajak.Domain.Repositories.Vocabs;
 using Vaajak.Persistence.Contexts;
 using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace Vaajak.Infrastructure.Repositories.Vocabs
 {
@@ -17,28 +18,16 @@ namespace Vaajak.Infrastructure.Repositories.Vocabs
             _dbContext = dbContext;
         }
 
-        public async Task<IPagedList<VocabsDto>> GetAllAsync(Guid packageId, PaginationRequestDTO pagination)
+        public async Task<IEnumerable<Vocab>> GetAllAsync()
         {
             // Ensure the query is correctly constructed
-            var query = _dbContext.Vocabs
-                .Where(vocab => vocab.Package.Any(package => package.Id == packageId))
+            return await _dbContext.Vocabs
                 .OrderByDescending(vocab => vocab.Id)
-                .Select(vocab => new VocabsDto
-                {
-                    Id = vocab.Id,
-                    Vocabulary = vocab.Vocabulary,
-                    Type = vocab.Type,
-                    Voice = vocab.Voice,
-                });
+                .ToListAsync();
 
-            // Apply pagination using ToPagedListAsync
-            var paginatedVocabs = await query
-                .ToPagedListAsync(pagination.Page, pagination.PageSize);
-
-            return paginatedVocabs;
         }
 
-        public async Task<VocabsDto> GetByIdAsync(Guid id)
+        public async Task<Vocab?> GetByIdAsync(Guid id)
         {
             try
             {
@@ -48,7 +37,7 @@ namespace Vaajak.Infrastructure.Repositories.Vocabs
             {
                     return null;
             }
-                var vocabDto = new VocabsDto
+                var vocabDto = new Vocab
                 {
                     Id = vocab.Id,
                     Vocabulary = vocab.Vocabulary,
@@ -67,7 +56,7 @@ namespace Vaajak.Infrastructure.Repositories.Vocabs
             }
         }
 
-        public async Task<CreateVocabDto> CreateVocab(CreateVocabDto createVocabDto)
+        public async Task<Vocab> CreateVocab(CreateVocabDto createVocabDto)
         {
             if (createVocabDto == null)
             {

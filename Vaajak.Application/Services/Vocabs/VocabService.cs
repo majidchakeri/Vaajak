@@ -2,6 +2,8 @@
 using Vaajak.Application.Dto.Vocabs;
 using Vaajak.Domain.Entities;
 using Vaajak.Domain.Repositories.Vocabs;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace Vaajak.Application.Services.Vocabs
 {
@@ -14,16 +16,19 @@ namespace Vaajak.Application.Services.Vocabs
             _vocabsRepository = vocabsRepository;
         }
         
-        public async Task<IList<VocabsDto>> GetAllVocabs(PaginationRequestDTO pagination)
+        public async Task<IPagedList<VocabsDto>> GetAllAsync(Guid packageId, PaginationRequestDTO pagination)
         {
-            var vocabs = await _vocabsRepository.GetAllAsync(pagination.PageSize, pagination.Page);
-            return vocabs.Select(v => new VocabsDto
+            var vocabs = await _vocabsRepository.GetAllAsync();
+            var vocabsDto = vocabs.Select(vocab => new VocabsDto
             {
-                Id = v.Id,
-                Vocabulary = v.Vocabulary,
-                Type = v.Type,
-                Voice = v.Voice
+                Id = vocab.Id,
+                Vocabulary = vocab.Vocabulary,
+                Type = vocab.Type,
+                Voice = vocab.Voice
             });
+            var paginatedVocabs = vocabsDto.ToPagedList(pagination.PageNumber, pagination.PageSize);
+
+            return paginatedVocabs;
         }
         
         public async Task<VocabsDto?> GetById(Guid id)
@@ -40,7 +45,7 @@ namespace Vaajak.Application.Services.Vocabs
             };
         }
 
-        public async Task<VocabsDto> CreateVocab(CreateVocabDto createVocabDto)
+        public async Task<CreateVocabDto> CreateVocab(CreateVocabDto createVocabDto)
         {
             var vocab = new Vocab
             {
@@ -52,9 +57,8 @@ namespace Vaajak.Application.Services.Vocabs
             };
             var createdVocab = await _vocabsRepository.CreateVocab(vocab);
 
-            var vocabDto = new VocabsDto
+            var vocabDto = new CreateVocabDto
             {
-                Id = createdVocab.Id,
                 Vocabulary = createdVocab.Vocabulary,
                 Type = createdVocab.Type,
                 Voice = createdVocab.Voice
