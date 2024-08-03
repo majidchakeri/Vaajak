@@ -52,7 +52,6 @@ namespace Vaajak.Application.Services.Vocabs
                 Vocabulary = createVocabDto.Vocabulary,
                 Type = createVocabDto.Type,
                 Voice = createVocabDto.Voice
-                // سایر خواص را اینجا اضافه کنید
             };
             var createdVocab = await _vocabsRepository.CreateVocab(vocab);
 
@@ -61,7 +60,6 @@ namespace Vaajak.Application.Services.Vocabs
                 Vocabulary = createdVocab.Vocabulary,
                 Type = createdVocab.Type,
                 Voice = createdVocab.Voice
-                // Add additional properties here if needed
             };
 
             return vocabDto;

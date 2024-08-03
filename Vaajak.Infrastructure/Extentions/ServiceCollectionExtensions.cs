@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Vaajak.Domain.Repositories.Packages;
 using Vaajak.Domain.Repositories.Vocabs;
+using Vaajak.Infrastructure.Repositories.Packages;
 using Vaajak.Infrastructure.Repositories.Vocabs;
 using Vaajak.Persistence.Contexts;
 
@@ -16,6 +18,7 @@ namespace Vaajak.Infrastructure.Extentions
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
 
             services.AddScoped<IVocabsRepository, VocabRepository>();
+            services.AddScoped<IPackagesRepository, PackageRepository>();
         }
     }
 }

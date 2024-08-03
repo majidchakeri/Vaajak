@@ -54,7 +54,7 @@ namespace VaajakApi.Controllers
             var vocab = await _vocabService.CreateVocab(createVocabDto);
             if(vocab == null)
             {
-                return NotFound();
+                return BadRequest();
             }
             return Ok(vocab);
 
