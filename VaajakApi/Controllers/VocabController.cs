@@ -58,7 +58,46 @@ namespace VaajakApi.Controllers
             }
             return Ok(vocab);
 
+        }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateVocab([FromBody] UpdateVocabDto updateVocabDto)
+        {
+            var vocab = await _vocabService.UpdateVocab(updateVocabDto);
+
+            if (vocab == null)
+            {
+                return NotFound();
+            }
+            return Ok(vocab);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteVocab([FromQuery] Guid id)
+        {
+            try
+            {
+                // Call the service to delete the vocab
+                bool isDeleted = await _vocabService.DeleteById(id);
+
+                // Check if the delete operation was successful
+                if (!isDeleted)
+                {
+                    // Return a 404 Not Found response if the vocab was not found
+                    return NotFound(new { Message = "Vocab not found." });
+                }
+
+                // Return a 204 No Content response indicating successful deletion
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (using a logging framework of your choice)
+                Console.WriteLine($"An error occurred while deleting vocab: {ex.Message}");
+
+                // Return a 500 Internal Server Error response
+                return StatusCode(500, new { Message = "An error occurred while processing your request." });
+            }
         }
     }
 }

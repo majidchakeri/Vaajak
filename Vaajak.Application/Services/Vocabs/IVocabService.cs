@@ -10,5 +10,7 @@ namespace Vaajak.Application.Services.Vocabs
         Task<IPagedList<VocabsDto>> GetAllAsync(Guid packageId, PaginationRequestDTO pagination);
         Task<VocabsDto?> GetById(Guid id);
         Task<CreateVocabDto> CreateVocab(CreateVocabDto createVocabDto);
+        Task<UpdateVocabDto> UpdateVocab(UpdateVocabDto updateVocabDto);
+        Task<bool> DeleteById(Guid id);
     }
 }

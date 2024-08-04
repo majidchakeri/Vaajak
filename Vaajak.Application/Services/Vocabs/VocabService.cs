@@ -65,6 +65,38 @@ namespace Vaajak.Application.Services.Vocabs
             return vocabDto;
         }
 
-       
+        public async Task<UpdateVocabDto?> UpdateVocab(Guid id,UpdateVocabDto updateVocabDto)
+        {
+            var vocab = new Vocab
+            {
+                Id = id,
+                Vocabulary = updateVocabDto.Vocabulary,
+                Type = updateVocabDto.Type,
+                Voice = updateVocabDto.Voice
+            };
+
+            if (vocab == null) return null;
+
+            var updatedVocab = await _vocabsRepository.UpdateVocab(vocab);
+
+
+            return new UpdateVocabDto
+            {
+                Vocabulary = updatedVocab.Vocabulary,
+                Type = updatedVocab.Type,
+                Voice = updatedVocab.Voice
+            };
+        }
+
+        public async Task<bool> DeleteVocab(Guid id)
+        {
+            bool isDeleted = await _vocabsRepository.DeleteVocab(id);
+            return isDeleted;
+
+
+        }
+
+
+
     }
 }
