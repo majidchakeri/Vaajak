@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Vaajak.Persistence\Vaajak.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\Account\" />
+  </ItemGroup>
+
 </Project>
