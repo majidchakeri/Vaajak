@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Vaajak.Domain.Entities;
 
 namespace Vaajak.Domain.Repositories.Account
 {
-    public class IAccountRepository
+    public interface IAccountRepository
     {
-        private readonly IdentityDatabaseContext identityDatabaseContext;
-
-
+        Task<User> SignUpAsync(User user, string password);
+        Task<User> SignIpAsync(string username, string password);
+        Task<User> FindByEmailAsync(string email);
+        Task<bool> CheckPasswordAsync(User user, string password);
+        Task<string> GenerateJwtTokenAsync(User user);
     }
 }
