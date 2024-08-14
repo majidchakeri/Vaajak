@@ -19,7 +19,7 @@ namespace Vaajak.Persistence.Repositories.Account
 
         public async Task<User?> SignUpAsync(User user)
         {
-            if (user == null) {
+            
         }
     }
 }
