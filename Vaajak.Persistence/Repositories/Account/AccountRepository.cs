@@ -17,9 +17,27 @@ namespace Vaajak.Persistence.Repositories.Account
             _jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<User?> SignUpAsync(User user)
+        public async Task<User?> SignupAsync(User user, string password)
         {
-            
+            var result = await _userManager.CreateAsync(user, password);
+
+            if (result.Succeeded)
+            {
+                return user;
+            }
+
+            throw new InvalidOperationException(string.Join(", ", result.Errors.Select(e => e.Description)));
+        }
+
+        public async Task<User?> SigninAsync(string email, string password)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null || !await _userManager.CheckPasswordAsync(user, password))
+            {
+                return null;
+            }
+
+            return user;
         }
     }
 }
