@@ -39,5 +39,19 @@ namespace Vaajak.Persistence.Repositories.Account
 
             return user;
         }
+
+        public async Task<User> FindByEmailAsync(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
+
+        public async Task<bool> CheckPasswordAsync(User user, string password)
+        {
+            return await _userManager.CheckPasswordAsync(user, password);
+        }
+        public async Task<string> GenerateJwtTokenAsync(User user)
+        {
+            return await _jwtTokenGenerator.GenerateJwtTokenAsync(user);
+        }
     }
 }
